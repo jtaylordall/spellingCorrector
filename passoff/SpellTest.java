@@ -20,18 +20,17 @@ public class SpellTest {
     private ISpellCorrector studentCorrector;
 
     @BeforeEach
-    public void setup(){
-        try{
+    public void setup() {
+        try {
             studentCorrector = new SpellCorrector();
-        }
-        catch(Throwable t){
+        } catch (Throwable t) {
             assertTrue(false, t.getClass() + ". Make sure class name is spell.SpellCorrector.");
         }
     }
 
     @Test
     @DisplayName("Valid Word Testing")
-    public void testValidWord(){
+    public void testValidWord() {
         String suggestedWord = test(WORD_FILENAME, WORD);
         assertEquals(WORD, suggestedWord, "Same spelling of expected word.");
 
@@ -47,7 +46,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("Edit Distance One: Insertion")
-    public void testInsertion(){
+    public void testInsertion() {
         String guess = "ye";
         String suggestedWord = test(WORD_FILENAME, guess);
         assertEquals(WORD, suggestedWord, createErrorMessage(guess, WORD, suggestedWord));
@@ -63,7 +62,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("Edit Distance One: Deletion")
-    public void testDeletion(){
+    public void testDeletion() {
         String guess = "yeaz";
         String suggestedWord = test(WORD_FILENAME, guess);
         assertEquals(WORD, suggestedWord, createErrorMessage(guess, WORD, suggestedWord));
@@ -87,7 +86,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("Edit Distance One: Alteration")
-    public void testAlteration(){
+    public void testAlteration() {
         String guess = "flobt";
         String suggestedWord = test(WORDS_FILENAME, guess);
         assertEquals("float", suggestedWord, createErrorMessage(guess, "float", suggestedWord));
@@ -103,7 +102,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("Edit Distance One: Transposition")
-    public void testTransposition(){
+    public void testTransposition() {
         String guess = "yaeh";
         String suggestedWord = test(WORDS_FILENAME, guess);
         assertEquals("yeah", suggestedWord, createErrorMessage(guess, "yeah", suggestedWord));
@@ -115,7 +114,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("Edit Distance Two: Insertion then Insertion")
-    public void testInsertionInsertion(){
+    public void testInsertionInsertion() {
         String guess = "e";
         String suggestedWord = test(WORD_FILENAME, guess);
         assertEquals(WORD, suggestedWord, createErrorMessage(guess, WORD, suggestedWord));
@@ -131,7 +130,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("Edit Distance Two: Insertion then Deletion")
-    public void testInsertionDeletion(){
+    public void testInsertionDeletion() {
         String guess = "yez";
         String suggestedWord = test(WORD_FILENAME, guess);
         assertEquals(WORD, suggestedWord, createErrorMessage(guess, WORD, suggestedWord));
@@ -215,7 +214,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("Edit Distance Two: Deletion then Alteration")
-    public void testDeletionAlteration(){
+    public void testDeletionAlteration() {
         String guess = "ydef";
         String suggestedWord = test(WORD_FILENAME, guess);
         assertEquals(WORD, suggestedWord, createErrorMessage(guess, WORD, suggestedWord));
@@ -231,7 +230,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("Edit Distance Two: Deletion then Transposition")
-    public void testDeletionTransposition(){
+    public void testDeletionTransposition() {
         String guess = "yade";
         String suggestedWord = test(WORD_FILENAME, guess);
         assertEquals(WORD, suggestedWord, createErrorMessage(guess, WORD, suggestedWord));
@@ -247,7 +246,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("Edit Distance Two: Alteration then Insertion")
-    public void testAlterationInsertion(){
+    public void testAlterationInsertion() {
         String guess = "fe";
         String suggestedWord = test(WORD_FILENAME, guess);
         assertEquals(WORD, suggestedWord, createErrorMessage(guess, WORD, suggestedWord));
@@ -263,7 +262,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("Edit Distance Two: Alteration then Deletion")
-    public void testAlterationDeletion(){
+    public void testAlterationDeletion() {
         String guess = "feia";
         String suggestedWord = test(WORD_FILENAME, guess);
         assertEquals(WORD, suggestedWord, createErrorMessage(guess, WORD, suggestedWord));
@@ -279,7 +278,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("Edit Distance Two: Alteration then Alteration")
-    public void testAlterationAlteration(){
+    public void testAlterationAlteration() {
         String guess = "vda";
         String suggestedWord = test(WORD_FILENAME, guess);
         assertEquals(WORD, suggestedWord, createErrorMessage(guess, WORD, suggestedWord));
@@ -295,7 +294,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("Edit Distance Two: Alteration then Transposition")
-    public void testAlterationTransposition(){
+    public void testAlterationTransposition() {
         String guess = "yac";
         String suggestedWord = test(WORD_FILENAME, guess);
         assertEquals(WORD, suggestedWord, createErrorMessage(guess, WORD, suggestedWord));
@@ -311,7 +310,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("Edit Distance Two: Transposition then Insertion")
-    public void testTranspositionInsertion(){
+    public void testTranspositionInsertion() {
         String guess = "ay";
         String suggestedWord = test(WORD_FILENAME, guess);
         assertEquals(WORD, suggestedWord, createErrorMessage(guess, WORD, suggestedWord));
@@ -327,7 +326,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("Edit Distance Two: Transposition then Deletion")
-    public void testTranspositionDeletion(){
+    public void testTranspositionDeletion() {
         String guess = "ycae";
         String suggestedWord = test(WORD_FILENAME, guess);
         assertEquals(WORD, suggestedWord, createErrorMessage(guess, WORD, suggestedWord));
@@ -343,7 +342,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("Edit Distance Two: Transposition then Alteration")
-    public void testTranspositionAlteration(){
+    public void testTranspositionAlteration() {
         String guess = "yac";
         String suggestedWord = test(WORD_FILENAME, guess);
         assertEquals(WORD, suggestedWord, createErrorMessage(guess, WORD, suggestedWord));
@@ -359,7 +358,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("Edit Distance Two: Transposition then Transposition")
-    public void testTranspositionTransposition(){
+    public void testTranspositionTransposition() {
         String guess = "eay";
         String suggestedWord = test(WORD_FILENAME, guess);
         assertEquals(WORD, suggestedWord, createErrorMessage(guess, WORD, suggestedWord));
@@ -371,7 +370,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("No Similar Words")
-    public void testDNoSimilarWords(){
+    public void testDNoSimilarWords() {
         String guess = "";
         String suggestedWord = test(WORD_FILENAME, guess);
         assertNull(suggestedWord, "Guessed empty string.");
@@ -387,7 +386,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("Choose Closest Word")
-    public void testChooseClosestWord(){
+    public void testChooseClosestWord() {
         String suggestedWord = test(WORDS_FILENAME, "ye");
         assertEquals("yea", suggestedWord, "Choosing edit distance one before two");
 
@@ -403,7 +402,7 @@ public class SpellTest {
 
     @Test
     @DisplayName("Big File")
-    public void testBigFile(){
+    public void testBigFile() {
         String guess = "Jason";
         String suggestedWord = test(BIG_FILENAME, guess);
         assertEquals("jason", suggestedWord, createErrorMessage(guess, "jason", suggestedWord));
@@ -440,7 +439,7 @@ public class SpellTest {
         return suggestion;
     }
 
-    private String createErrorMessage(String guess, String expected, String suggested){
+    private String createErrorMessage(String guess, String expected, String suggested) {
         StringBuilder message = new StringBuilder("Guessed: ");
         message.append(guess);
         message.append(" Expected: ");

@@ -4,19 +4,24 @@ public class Trie implements ITrie {
 
     public TrieNode root;
     public String out;
-    private int hash;
-    private int count;
+    public int hash;
+    public int nodeCount;
+    public int wordCount;
 
     public Trie() {
         this.root = new TrieNode();
         this.hash = 0;
-        this.count = 0;
+        this.nodeCount = 0;
+        this.wordCount = 0;
     }
 
     @Override
     public void add(String word) {
-        count++;
-        this.hash += word.hashCode() + count * count / 3 % 2;
+        wordCount++;
+        this.hash += word.hashCode() + wordCount * wordCount / 3 % 2;
+        if (find(word) == null){
+            nodeCount++;
+        }
         if (!"".equals(word)) {
             root.adding(word.toLowerCase());
         }
@@ -29,12 +34,12 @@ public class Trie implements ITrie {
 
     @Override
     public int getWordCount() {
-        return 0;
+        return wordCount;
     }
 
     @Override
     public int getNodeCount() {
-        return count;
+        return nodeCount;
     }
 
     public String toString() {
@@ -46,10 +51,14 @@ public class Trie implements ITrie {
         return hash;
     }
 
-    @Override
+    //@Override
     public boolean equals(Object o) {
         Trie t = (Trie) o;
-        if (this.hash == t.hashCode()) {
+        System.out.println(this.hash == t.hashCode());
+        System.out.println(this.wordCount == t.getWordCount());
+        System.out.println(this.nodeCount == t.getNodeCount());
+
+        if (hashCode() == t.hashCode() && getWordCount() == t.getWordCount() && getNodeCount() == t.getNodeCount()) {
             return this.root.equals(t.root);
         }
         return false;

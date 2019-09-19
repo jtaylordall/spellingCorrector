@@ -4,8 +4,8 @@ import java.util.Vector;
 
 public class TrieNode implements INode {
 
-    private TrieNode[] nodes;
-    private int count;
+    public TrieNode[] nodes;
+    public int count;
 
     TrieNode() {
         this.count = 0;
@@ -65,7 +65,7 @@ public class TrieNode implements INode {
     }
 
     // Returns a strings obtained through recursively traversing the Trie
-    private Vector<String> toStringVec() {
+    public Vector<String> toStringVec() {
         Vector<String> v = new Vector<>();
         for (int a = 0; a < 25; a++) { // Iterates through each node
             char here = (char) (a + 'a');
@@ -86,7 +86,7 @@ public class TrieNode implements INode {
     }
 
     // Adds a character to the beginning of a string
-    private String prependString(char first, String second) {
+    public String prependString(char first, String second) {
         StringBuffer sb = new StringBuffer();
         sb.append(first);
         sb.append(second);

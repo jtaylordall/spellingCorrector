@@ -1,9 +1,9 @@
 package spell;
 
 public class Edit implements Comparable<Edit> {
-    private String word;
-    private int distance;
-    private int count;
+    public String word;
+    public int distance;
+    public int count;
 
     Edit(String word, int distance) {
         this.word = word;
