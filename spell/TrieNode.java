@@ -55,18 +55,13 @@ public class TrieNode implements INode {
     // Constructs a string of all the words in the Trie, only called by root
     @Override
     public String toString() {
-        Vector<String> v = toStringHelp(this, new StringBuilder(""));
-        StringBuilder sb = new StringBuilder();
-        for (String s : v) {
-            sb.append(s + "\n");
-        }
-        return sb.toString();
+        return toStringHelp(this, new StringBuilder()).toString();
     }
 
-    public Vector<String> toStringHelp(TrieNode root, StringBuilder word) {
-        Vector<String> v = new Vector<>();
+    public StringBuilder toStringHelp(TrieNode root, StringBuilder word) {
+        StringBuilder sb = new StringBuilder();
         if (root == null) {
-            return v;
+            return sb;
         }
         for (int a = 0; a < 26; a++) {
             if (root.nodes[a] != null) {
@@ -74,12 +69,12 @@ public class TrieNode implements INode {
                 prep.append(word);
                 prep.append((char) (a + 'a'));
                 if (root.nodes[a].getValue() > 0) {
-                    v.add(prep.toString());
+                    sb.append(prep.toString() + '\n');
                 }
-                v.addAll(toStringHelp(root.nodes[a], prep));
+                sb.append(toStringHelp(root.nodes[a], prep));
             }
         }
-        return v;
+        return sb;
     }
 
     // Compares TrieNode connections to see if they match, checks both Tries in parallel
