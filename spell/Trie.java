@@ -2,11 +2,11 @@ package spell;
 
 public class Trie implements ITrie {
 
-    public TrieNode root;
-    public String out;
-    public int hash;
-    public int nodeCount;
-    public int wordCount;
+    private TrieNode root;
+    private int hash;
+    private int nodeCount;
+    private int wordCount;
+    private int count;
 
     public Trie() {
         this.root = new TrieNode();
@@ -17,10 +17,10 @@ public class Trie implements ITrie {
 
     @Override
     public void add(String word) {
-        wordCount++;
-        this.hash += word.hashCode() + wordCount * wordCount / 3 % 2;
-        if (find(word) == null){
-            nodeCount++;
+        count++;
+        this.hash += word.hashCode() + count * count / 3 % 2;
+        if (find(word) == null) {
+            wordCount++;
         }
         if (!"".equals(word)) {
             root.adding(word.toLowerCase());
@@ -39,6 +39,7 @@ public class Trie implements ITrie {
 
     @Override
     public int getNodeCount() {
+        nodeCount = root.runThroughTrie() + 1;
         return nodeCount;
     }
 
@@ -51,16 +52,20 @@ public class Trie implements ITrie {
         return hash;
     }
 
-    //@Override
+    @Override
     public boolean equals(Object o) {
-        Trie t = (Trie) o;
-        System.out.println(this.hash == t.hashCode());
-        System.out.println(this.wordCount == t.getWordCount());
-        System.out.println(this.nodeCount == t.getNodeCount());
-
-        if (hashCode() == t.hashCode() && getWordCount() == t.getWordCount() && getNodeCount() == t.getNodeCount()) {
-            return this.root.equals(t.root);
+        try {
+            Trie t = (Trie) o;
+            if (t == null) {
+                return false;
+            }
+            if (hashCode() == t.hashCode() && getWordCount() == t.getWordCount() && getNodeCount() == t.getNodeCount()) {
+                return this.root.equals(t.root);
+            }
+            return false;
+        } catch (ClassCastException e) {
+            return false;
         }
-        return false;
     }
+
 }

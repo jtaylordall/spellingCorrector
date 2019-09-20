@@ -1,11 +1,12 @@
 package spell;
 
+import java.lang.reflect.Array;
 import java.util.Vector;
 
 public class TrieNode implements INode {
 
-    public TrieNode[] nodes;
-    public int count;
+    private TrieNode[] nodes;
+    private int count;
 
     TrieNode() {
         this.count = 0;
@@ -33,8 +34,6 @@ public class TrieNode implements INode {
     }
 
     //Recursively traverses Tree fo find a particular word, if found returns the node, else returns null
-
-
     TrieNode finding(String word) {
         TrieNode found;
         char first = word.charAt(0);
@@ -56,41 +55,31 @@ public class TrieNode implements INode {
     // Constructs a string of all the words in the Trie, only called by root
     @Override
     public String toString() {
+        Vector<String> v = toStringHelp(this, new StringBuilder(""));
         StringBuilder sb = new StringBuilder();
-        for (String word : toStringVec()) {
-            sb.append(word);
-            sb.append('\n');
+        for (String s : v) {
+            sb.append(s + "\n");
         }
         return sb.toString();
     }
 
-    // Returns a strings obtained through recursively traversing the Trie
-    public Vector<String> toStringVec() {
+    public Vector<String> toStringHelp(TrieNode root, StringBuilder word) {
         Vector<String> v = new Vector<>();
-        for (int a = 0; a < 25; a++) { // Iterates through each node
-            char here = (char) (a + 'a');
-            if (nodes[a] != null) {
-                // Recursively obtains a vector of strings which are partial words built backwards
-                Vector<String> v2 = nodes[a].toStringVec();
-                for (String b : v2) { // Adds current character to the beginning of each partial word
-                    String c = prependString(here, b);
-                    v.add(c); // Adds all new partial words to the method's returning vector
+        if (root == null) {
+            return v;
+        }
+        for (int a = 0; a < 26; a++) {
+            if (root.nodes[a] != null) {
+                StringBuilder prep = new StringBuilder();
+                prep.append(word);
+                prep.append((char) (a + 'a'));
+                if (root.nodes[a].getValue() > 0) {
+                    v.add(prep.toString());
                 }
-                if (this.nodes[a].getValue() >= 1) {
-                    // A count value indicates the end of a word, and is added to the returning vector
-                    v.add(String.valueOf(here));
-                }
+                v.addAll(toStringHelp(root.nodes[a], prep));
             }
         }
         return v;
-    }
-
-    // Adds a character to the beginning of a string
-    public String prependString(char first, String second) {
-        StringBuffer sb = new StringBuffer();
-        sb.append(first);
-        sb.append(second);
-        return sb.toString();
     }
 
     // Compares TrieNode connections to see if they match, checks both Tries in parallel
@@ -115,5 +104,16 @@ public class TrieNode implements INode {
     @Override
     public int getValue() {
         return count;
+    }
+
+    int runThroughTrie() {
+        int getNodeCount = 0;
+        for (int a = 0; a < 26; a++) {
+            if (nodes[a] != null) { // branches match
+                getNodeCount++;
+                getNodeCount += nodes[a].runThroughTrie();
+            }
+        }
+        return getNodeCount;
     }
 }

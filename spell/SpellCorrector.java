@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.util.*;
 
 public class SpellCorrector implements ISpellCorrector {
-    public Collection<Edit> edits;
-    public Collection<Edit> edits2;
+    private Collection<Edit> edits;
+    private Collection<Edit> edits2;
 
-    public Collection<Edit> suggestions;
-    public Trie dictionary;
+    private Collection<Edit> suggestions;
+    private Trie dictionary;
 
     public SpellCorrector() {
         this.edits = new TreeSet<>();
@@ -51,18 +51,23 @@ public class SpellCorrector implements ISpellCorrector {
         this.edits = new TreeSet<>();
         this.edits2 = new TreeSet<>();
         this.suggestions = new TreeSet<>();
+
         if ("".equals(inputWord)) {
             return null;
         }
         if (dictionary.find(inputWord) != null) {
             return inputWord.toLowerCase();
         }
+
         int distance = 1;
         edits2.add(new Edit(inputWord.toLowerCase(), 0));
         generateEdits(inputWord, distance);
+
         boolean found = searchEdits();
+
         edits.addAll(edits2);
         edits2 = new TreeSet<>();
+
         if (!found) {
             distance++;
             generateMoreEdits(distance);
@@ -70,10 +75,7 @@ public class SpellCorrector implements ISpellCorrector {
             searchEdits();
         }
 
-        //printEdits();
-
         if (suggestions.size() > 0) {
-            //printSuggestions();
             String s = suggestions.iterator().next().getWord();
             suggestions = null;
             edits = null;
@@ -223,6 +225,4 @@ public class SpellCorrector implements ISpellCorrector {
             edits.add(new Edit(trans, distance));
         }
     }
-
-
 }

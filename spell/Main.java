@@ -14,15 +14,14 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
         if (args.length > 0) {
+
             String dictionaryFileName = args[0];
             String inputWord = args[1];
 
             ISpellCorrector corrector = new SpellCorrector();
-            ISpellCorrector corrector2 = new SpellCorrector();
-
             corrector.useDictionary(dictionaryFileName);
-			corrector2.useDictionary(dictionaryFileName);
-			String suggestion = corrector.suggestSimilarWord(inputWord);
+            String suggestion = corrector.suggestSimilarWord(inputWord);
+
             if (suggestion == null) {
                 suggestion = "No similar word found";
             }
@@ -30,5 +29,4 @@ public class Main {
             System.out.println("Suggestion is: " + suggestion);
         }
     }
-
 }
